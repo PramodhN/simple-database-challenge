@@ -23,17 +23,49 @@ public class Database {
 	private static void handleInputLine(String line) {
 		String[] parameters = line.split("\\s");
 		String operation = parameters[0];
+		String variable;
+		int value;
+		boolean isProblem = false;
 		switch (operation) {
 		case BEGIN:
 			db.begin();
 			break;
 		case GET:
+			if (parameters.length == 2) {
+				variable = parameters[1];
+				db.get(variable);
+			} else
+				isProblem = true;
 			break;
 		case SET:
+			if (parameters.length == 3) {
+				variable = parameters[1];
+				try {
+					value = Integer.parseInt(parameters[2]);
+					db.set(variable, value);
+				} catch (NumberFormatException e) {
+					isProblem = true;
+				}
+			} else
+				isProblem = true;
 			break;
 		case UNSET:
+			if (parameters.length == 2) {
+				variable = parameters[1];
+				db.unset(variable);
+			} else
+				isProblem = true;
 			break;
 		case NUMEQUALTO:
+			if (parameters.length == 2) {
+				try {
+					value = Integer.parseInt(parameters[1]);
+					db.numEqualTo(value);
+				} catch (NumberFormatException e) {
+					isProblem = true;
+				}
+			} else
+				isProblem = true;
 			break;
 		case ROLLBACK:
 			break;
@@ -43,6 +75,8 @@ public class Database {
 			System.err.println("Invalid operation: " + operation + "\nIgnoring this line.");
 			break;
 		}
+		if (isProblem)
+			System.err.println("Invalid parameters for " + operation + " operation. Ignoring this line.");
 	}
 
 	private static void fileInput(String inputFileName) {
