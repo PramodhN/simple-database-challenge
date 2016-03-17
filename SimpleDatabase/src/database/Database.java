@@ -28,7 +28,7 @@ public class Database {
 		String variable;
 		int value;
 		boolean isProblem = false;
-		switch (operation) {
+		switch (operation.toUpperCase()) {
 		case BEGIN:
 			operations = transactions.begin(operations);
 			break;
