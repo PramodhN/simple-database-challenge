@@ -6,10 +6,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import database.operations.DatabaseOperations;
+import database.operations.Operations;
+import database.operations.Transactions;
 
 public class Database {
-	private static DatabaseOperations db;
+	private static Operations operations;
+	private static Transactions transactions;
 
 	private final static String BEGIN = "BEGIN";
 	private final static String SET = "SET";
@@ -28,12 +30,12 @@ public class Database {
 		boolean isProblem = false;
 		switch (operation) {
 		case BEGIN:
-			db.begin();
+			operations = transactions.begin(operations);
 			break;
 		case GET:
 			if (parameters.length == 2) {
 				variable = parameters[1];
-				db.get(variable);
+				operations.get(variable);
 			} else
 				isProblem = true;
 			break;
@@ -42,7 +44,7 @@ public class Database {
 				variable = parameters[1];
 				try {
 					value = Integer.parseInt(parameters[2]);
-					db.set(variable, value);
+					operations.set(variable, value);
 				} catch (NumberFormatException e) {
 					isProblem = true;
 				}
@@ -52,7 +54,7 @@ public class Database {
 		case UNSET:
 			if (parameters.length == 2) {
 				variable = parameters[1];
-				db.unset(variable);
+				operations.unset(variable);
 			} else
 				isProblem = true;
 			break;
@@ -60,7 +62,7 @@ public class Database {
 			if (parameters.length == 2) {
 				try {
 					value = Integer.parseInt(parameters[1]);
-					db.numEqualTo(value);
+					operations.numEqualTo(value);
 				} catch (NumberFormatException e) {
 					isProblem = true;
 				}
@@ -68,10 +70,10 @@ public class Database {
 				isProblem = true;
 			break;
 		case ROLLBACK:
-			db.rollback();
+			operations = transactions.rollback(operations);
 			break;
 		case COMMIT:
-			db.commit();
+			operations = transactions.commit(operations);
 			break;
 		default:
 			System.err.println("Invalid operation: " + operation + "\nIgnoring this line.");
@@ -114,7 +116,8 @@ public class Database {
 	}
 
 	public static void main(String[] args) {
-		db = new DatabaseOperations();
+		operations = new Operations();
+		transactions = new Transactions();
 		if (args.length == 0)
 			commandLineInput();
 		else if (args.length == 1)
