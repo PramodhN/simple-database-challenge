@@ -61,14 +61,6 @@ public class Operations {
 		}
 	}
 
-	public Object clone() {
-		try {
-			return (Operations) super.clone();
-		} catch (CloneNotSupportedException e) {
-			return null;
-		}
-	}
-
 	public boolean equals(Operations operations) {
 		if (this.variables.keySet().size() == operations.getVariables().keySet().size()) {
 			for (String variable : this.variables.keySet()) {
