@@ -43,6 +43,8 @@ public class Transactions {
 				System.out.println("NO TRANSACTION");
 				transactions.push(lastCommitted);
 			}
+			if (transactions.isEmpty())
+				isBegin = false;
 			return lastCommitted;
 		} else {
 			System.out.println("NO TRANSACTION");
