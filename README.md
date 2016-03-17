@@ -11,6 +11,7 @@ Operations
 ----------
 - This class stores the temporary information of the variables created and handles operations such as *GET, SET, UNSET and NUMEQUALTO*.
 - It also has an equals method to check if 2 operations are the same. This is used to decide if *ROLLBACK* needs to be done in case of some new transaction.
+- It uses 2 maps. One map stores the value for each variable. The other map stores the count of each value assigned to the variables.
  
 Transactions
 ------------
