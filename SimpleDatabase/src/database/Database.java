@@ -68,8 +68,10 @@ public class Database {
 				isProblem = true;
 			break;
 		case ROLLBACK:
+			db.rollback();
 			break;
 		case COMMIT:
+			db.commit();
 			break;
 		default:
 			System.err.println("Invalid operation: " + operation + "\nIgnoring this line.");
@@ -86,6 +88,8 @@ public class Database {
 			BufferedReader reader = new BufferedReader(fileReader);
 			String line;
 			while ((line = reader.readLine()) != null) {
+				if (line.equals(END))
+					break;
 				handleInputLine(line);
 			}
 			fileReader.close();
