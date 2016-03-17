@@ -2,8 +2,16 @@ package database.operations;
 
 import java.util.HashMap;
 
+/**
+ * This class handles GET, SET, UNSET and NUMEQUALTO
+ * 
+ * @author Pramodh
+ * 
+ */
 public class Operations {
+	/** Map of variable name to its value */
 	private HashMap<String, Integer> variables;
+	/** Map of variable values to its count */
 	private HashMap<Integer, Integer> valueCounts;
 
 	public Operations() {
@@ -11,11 +19,19 @@ public class Operations {
 		valueCounts = new HashMap<Integer, Integer>();
 	}
 
+	/**
+	 * Copy constructor
+	 */
 	public Operations(Operations operations) {
 		this.variables = new HashMap<String, Integer>(operations.getVariables());
 		this.valueCounts = new HashMap<Integer, Integer>(operations.getValueCounts());
 	}
 
+	/**
+	 * Get value of given variable
+	 * 
+	 * @param variable
+	 */
 	public void get(String variable) {
 		if (variables != null) {
 			if (variables.containsKey(variable))
@@ -25,6 +41,12 @@ public class Operations {
 		}
 	}
 
+	/**
+	 * Set value for given variable and update value count accordingly.
+	 * 
+	 * @param variable
+	 * @param value
+	 */
 	public void set(String variable, int value) {
 		if (variables != null && valueCounts != null) {
 			if (variables.containsKey(variable)) {
@@ -41,6 +63,11 @@ public class Operations {
 		}
 	}
 
+	/**
+	 * Unset given variable and update value count accordingly.
+	 * 
+	 * @param variable
+	 */
 	public void unset(String variable) {
 		if (variables != null && valueCounts != null) {
 			if (variables.containsKey(variable)) {
@@ -52,6 +79,11 @@ public class Operations {
 		}
 	}
 
+	/**
+	 * Print number of elements with given value.
+	 * 
+	 * @param value
+	 */
 	public void numEqualTo(int value) {
 		if (valueCounts != null) {
 			if (valueCounts.containsKey(value))
@@ -61,6 +93,11 @@ public class Operations {
 		}
 	}
 
+	/**
+	 * Check if 2 operations are equal. If they are equal, it means there is no rollback required.
+	 * 
+	 * @param operations
+	 */
 	public boolean equals(Operations operations) {
 		if (this.variables.keySet().size() == operations.getVariables().keySet().size()) {
 			for (String variable : this.variables.keySet()) {

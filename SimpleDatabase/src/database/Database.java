@@ -9,6 +9,12 @@ import java.io.InputStreamReader;
 import database.operations.Operations;
 import database.operations.Transactions;
 
+/**
+ * Main class for Simple Database.
+ * 
+ * @author Pramodh
+ * 
+ */
 public class Database {
 	private static Operations operations;
 	private static Transactions transactions;
@@ -22,6 +28,11 @@ public class Database {
 	private final static String COMMIT = "COMMIT";
 	private final static String END = "END";
 
+	/**
+	 * Split input line based on requested operation and call the corresponding method
+	 * 
+	 * @param line
+	 */
 	private static void handleInputLine(String line) {
 		String[] parameters = line.split("\\s");
 		String operation = parameters[0];
@@ -83,6 +94,11 @@ public class Database {
 			System.err.println("Invalid parameters for " + operation + " operation. Ignoring this line.");
 	}
 
+	/**
+	 * Reads the given file and calls handleInputLine for each line in that file.
+	 * 
+	 * @param inputFileName
+	 */
 	private static void fileInput(String inputFileName) {
 		try {
 			File file = new File(inputFileName);
@@ -101,6 +117,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Reads from command line and calls handleInputLine for each line input.
+	 * 
+	 * @param inputFileName
+	 */
 	private static void commandLineInput() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

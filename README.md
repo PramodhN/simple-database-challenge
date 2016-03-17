@@ -31,4 +31,4 @@ java database/Database locationoffile.txt     // for file input
 
 - Since I have used a HashMap, the operations GET, SET, UNSET and NUMEQUALTO have a runtime of O(1).
 - Same holds for BEGIN and ROLLBACK too, which just performs push and pop on the stack.
-- COMMIT operations takes time to clear the stack and then push the changes completely inside.
+- COMMIT operations takes time to clear the stack and then keep only one committed copy.
